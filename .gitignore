@@ -6,6 +6,8 @@
 !*.m
 !*.md
 !*.py
+!*.txt
+!*.ps1
 
 # even if in sub-dirs
 !*/
