@@ -1,3 +1,7 @@
+General example:
+scp filename root@{ice_ip}:{harmonized_shim_path}/filename
+
+
 scp -oBatchMode=yes -oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa fre_update_file.txt root@192.168.2.2:/opt/medcom/MriCustomer/CustomerSeq/harmonized_shim/fre_update_file.txt
 
 scp -oBatchMode=yes -oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa shim_update_file.txt root@192.168.2.2:/opt/medcom/MriCustomer/CustomerSeq/harmonized_shim/shim_update_file.txt
