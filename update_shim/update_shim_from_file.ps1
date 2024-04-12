@@ -4,8 +4,7 @@
 # It reads the file fre_update_file.txt with the corresponding delta values to update the center frequency.
 # It updates the shim accordingly and updates transmit voltage and center frequency to prevent any automatic shim procedures from the MRI System.  
 #
-# Make sure the function 'AdjValidate' is installed on the MRI system!!! (cp AdjValidate.exe to C:\ProgramData\Siemens\Numaris\MriCustomer\bin )
-# (from C:\Program Files\Siemens\Numaris\Mars\MriCustomer\bin ???)
+# Make sure the function 'AdjValidate' is installed on the MRI system!!!
 #
 # MIT License 
 # Copyright 2024 Niklas Wehkamp
