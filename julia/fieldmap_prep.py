@@ -48,4 +48,4 @@ nib.save(nib.Nifti1Image(img1, np.eye(4)), 'sball.nii')
 
 # Save the .mat file
 sio.savemat(data_path + 'sball.mat', {'im_te1': im_te1, 'im_te2': im_te2, 'echotimes': echo_times})
-print('saving sball done!')
+print('fieldmap prep done!')

@@ -18,6 +18,8 @@ include("getcalmatrix.jl")   # getcalmatrix()
 include("shimoptim.jl")      # shimoptim()
 include("phant_mask.jl")     # phant_mask()
 
+run(`python fieldmap_prep.py`) #todo pass datapath to fieldmap_prep.py
+
 clim = (-60, 60).*Hz
 # Open Recontructed Data
 #data = matopen("../Jayden_NO/Matlab/sball_5plus100.mat")
@@ -53,6 +55,7 @@ data = matopen("/media/wehkamp/data_store/myDataDir/shim_niels_cimaX_20240514/sb
 data = matopen("/media/wehkamp/data_store/myDataDir/shim_niels_cimaX_20240514/sball.mat")
 
 #data = matopen("/media/wehkamp/data_store/myDataDir/shim_rename_calib_cimaX_manbase/sballs/sball_7minus100.mat")
+
 
 #data = matopen("nov10_1.mat")
 img1r = read(data, "im_te1")
