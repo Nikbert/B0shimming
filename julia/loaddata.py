@@ -1,8 +1,5 @@
 import numpy as np
 from mapvbvd import mapVBVD as mapVBVD
-from pypulseq.Sequence.read_seq import read
-from pypulseq.Sequence.sequence import Sequence
-
 
 def loaddata_siemens(data_path):
     """
