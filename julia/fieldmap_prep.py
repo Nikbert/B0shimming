@@ -1,18 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import nibabel as nib
+#import nibabel as nib
 import scipy.io as sio
 
 import loaddata as ld
 
-
-#def loaddata_siemens(file_path):
-#    # Placeholder for the actual data loading function
-#    # This function should load the data from the Siemens file and return it as a NumPy array
-#    pass
-
 # Echo times
 echo_times = [2.22, 4.45]  # NW this should be read from the data or the pulseq file
+
+# define Data Path
 data_path = '/media/wehkamp/data_store/myDataDir/shim_niels_cimaX_20240514/'
 data_file_path = data_path + '2024-05-14-115610.dat'
 
@@ -44,7 +40,7 @@ img2 = np.sqrt(np.sum(np.abs(im_te2), axis=3))
 #plt.show()
 
 # Save the NIfTI file
-nib.save(nib.Nifti1Image(img1, np.eye(4)), 'sball.nii')
+#nib.save(nib.Nifti1Image(img1, np.eye(4)), 'sball.nii')
 
 # Save the .mat file
 sio.savemat(data_path + 'sball.mat', {'im_te1': im_te1, 'im_te2': im_te2, 'echotimes': echo_times})
