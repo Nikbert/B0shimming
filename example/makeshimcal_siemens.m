@@ -21,7 +21,8 @@
 % location of data files 
 % datDir = '~/myDataDir/';
 % datDir = '~/myDataDir/shim_test4';
-datDir ='~/myDataDir/shim_test_8/'
+datDir = '/media/wehkamp/data_store/myDataDir/shim_calib_prisma_240606/';
+
 % datDir = '~/myDataDir/calib_data';
 
 % Acquisition parameters. See ../sequence/Pulseq/writeB0.m.

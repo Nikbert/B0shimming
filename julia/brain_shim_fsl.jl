@@ -18,6 +18,7 @@ include("getcalmatrix.jl")   # getcalmatrix()
 include("shimoptim.jl")      # shimoptim()
 include("phant_mask.jl")     # phant_mask()
 
+""" prepare fieldmap data sball.mat """
 run(`python fieldmap_prep.py`) #todo pass datapath to fieldmap_prep.py
 
 clim = (-60, 60).*Hz
@@ -40,19 +41,24 @@ clim = (-60, 60).*Hz
 #data = matopen("/media/wehkamp/data_store/myDataDir/shim_moji_cimaX_20240320/sball_custom3.mat")
 #data = matopen("/media/wehkamp/data_store/myDataDir/shim_moji_cimaX_20240416/sball_auto.mat")
 #data = matopen("/media/wehkamp/data_store/myDataDir/shim_moji_cimaX_20240320/sball_custom2.mat")
-#data = matopen("/media/wehkamp/data_store/myDataDir/shim_moji_cimaX_20240320/sball_gre.mat")
+data = matopen("/media/wehkamp/data_store/myDataDir/shim_moji_cimaX_20240320/sball_gre.mat")
 #data = matopen("/media/wehkamp/data_store/myDataDir/shim_moji_cimaX_20240320/sball_dess.mat")
 #data = matopen("/media/wehkamp/data_store/myDataDir/shim_moji_cimaX_20240320/sball_auto.mat")
 #data = matopen("/media/wehkamp/data_store/myDataDir/shim_calib_cimaX_240423/phantom_test/sball.mat")
 #data = matopen("/media/wehkamp/data_store/myDataDir/shim_niels_cimaX_240423/sball_2.mat")
 #data = matopen("/media/wehkamp/data_store/myDataDir/shim_niels_cimaX_240423/sball_3.mat")
-data = matopen("/media/wehkamp/data_store/myDataDir/shim_stephan_cimaX_240424/sball_2.mat")
+#data = matopen("/media/wehkamp/data_store/myDataDir/shim_stephan_cimaX_240424/sball_4.mat")
 #data = matopen("/media/wehkamp/data_store/myDataDir/shim_stephan_cimaX_240424/sball.mat")
-data = matopen("/media/wehkamp/data_store/myDataDir/shim_niels_cimaX_20240514/sball_1.mat")
-data = matopen("/media/wehkamp/data_store/myDataDir/shim_niels_cimaX_20240514/sball_2.mat")
-data = matopen("/media/wehkamp/data_store/myDataDir/shim_niels_cimaX_20240514/sball_3.mat")
-data = matopen("/media/wehkamp/data_store/myDataDir/shim_niels_cimaX_20240514/sball_1.mat")
-data = matopen("/media/wehkamp/data_store/myDataDir/shim_niels_cimaX_20240514/sball.mat")
+#data = matopen("/media/wehkamp/data_store/myDataDir/shim_niels_cimaX_20240514/sball_1.mat")
+#data = matopen("/media/wehkamp/data_store/myDataDir/shim_niels_cimaX_20240514/sball_2.mat")
+#data = matopen("/media/wehkamp/data_store/myDataDir/shim_niels_cimaX_20240514/sball_3.mat")
+#data = matopen("/media/wehkamp/data_store/myDataDir/shim_niels_cimaX_20240514/sball_1.mat")
+#data = matopen("/media/wehkamp/data_store/myDataDir/shim_niels_cimaX_20240514/sball.mat")
+#data = matopen("/media/wehkamp/data_store/myDataDir/shim_calib_prisma_240606/sball.mat")
+#data = matopen("/media/wehkamp/data_store/myDataDir/shim_niels_cimaX_20240617/sball.mat")
+#data = matopen("/media/wehkamp/data_store/myDataDir/shim_test_calib_phantom_prisma_240719/sball.mat")
+#data = matopen("/media/wehkamp/data_store/myDataDir/shim_ariel_prisma_20240725/sball.mat")
+#data = matopen("/media/wehkamp/data_store/myDataDir/shim_test_cimaX_20241001/sball.mat")
 
 #data = matopen("/media/wehkamp/data_store/myDataDir/shim_rename_calib_cimaX_manbase/sballs/sball_7minus100.mat")
 
@@ -82,7 +88,8 @@ niii = NIVolume(img1)
 #niwrite("bet image1_for_mask.nii", niii) the bug!!!!!!!!!!!!
 niwrite("image1_for_mask.nii", niii)
 
-cmd = `bet image1_for_mask.nii bet_term.nii -m -n -f 0.65`
+cmd = `bet image1_for_mask.nii bet_term.nii -m -n -f 0.75` #better20241010
+#cmd = `bet image1_for_mask.nii bet_term.nii -m -n -f 0.65`
 unz = `gunzip bet_term_mask.nii.gz`
 run(cmd)
 run(unz)
@@ -156,7 +163,8 @@ ftol_rel = 0.5e-5
 #matf = matread("../example/shimcal_cimax20.mat");
 #matf = matread("../example/shimcal_cimax20_rename.mat");
 #matf = matread("/media/wehkamp/data_store/myDataDir/shim_rename_calib_cimaX_manbase/shimcal/shimcal.mat")
-matf = matread("/media/wehkamp/data_store/myDataDir/shim_calib_cimaX_240423/shimcal.mat")
+#matf = matread("/media/wehkamp/data_store/myDataDir/shim_calib_cimaX_240423/shimcal.mat")
+matf = matread("/media/wehkamp/data_store/myDataDir/shim_calib_prisma_240606/shimcal.mat")
 F = matf["F"]   # [nx ny nz 8] for 2nd order shim systems
 S = matf["S"]   # [8 8] matrix with shim amplitudes (typically diagonal)
 mask_c = matf["mask_c"];
@@ -283,7 +291,11 @@ println("axes",axes(fpm))
 ##p = jim(fp; clim=(-200,200), color=:jet)
 #p = jim(mask; title = "Input Mask")
 #p = jim(cat(fmap[:,:,:],fp[:,:,:];dims=1); title = "Field maps 'Siemens auto' (l) vs. 'Harmonized' (r) shim",ncol=6, clim=(-200,200), color=:RdBu)
-p = jim(cat(fmap[:,:,:],fp[:,:,:];dims=1); ncol=6, clim=(-200,200), color=:RdBu, colorbar_title="frequency [Hz]")
+#p = jim(cat(fmap[:,:,:],fp[:,:,:];dims=1); ncol=6, clim=(-200,200), color=:RdBu, colorbar_title="frequency [Hz]")
+println("size fp",size(fp[:,:,:]))
+#p = jim(cat(fmap[30,:,:]',fp[30,:,:]';dims=1); ncol=3, clim=(-200,200), color=:RdBu, colorbar_title="frequency [Hz]")
+p = jim(cat(rotr90(fmap[:,:,30]),rotr90(fp[:,:,30]);dims=1); ncol=3, clim=(-200,200), color=:RdBu, colorbar_title="frequency [Hz]")
+#p = jim(cat(reverse(fmap[30,:,:],dims=2),reverse(fp[30,:,:],dims=2);dims=1); ncol=3, clim=(-200,200), color=:RdBu, colorbar_title="frequency [Hz]")
 #p = jim(cat(fmap[4*60*60:-4*60*60,:,:],fp[4*60*60:-4*60*60,:,:];dims=1); title = "Field maps 'Siemens auto' (l) vs. 'Harmonized' (r) shim",ncol=4, clim=(-200,200), color=:RdBu)
 #p = jim(cat(fmap[:,:,:],fp[:,:,:];dims=1); ncol=6, clim=(-200,200), color=:jet)
 display(p)
@@ -305,20 +317,20 @@ println("Done")
 #notes = ["C4", "D4", "E4", "F4"]
 
 ## CP to scanner
-#outfile = "fre_update_file.txt"
-#f = open(outfile, "w")
-#println(f, "-" * "$(shat_ge[1])")
-#close(f)
-#
-#outfile = "shim_update_file.txt"
-#f = open(outfile, "w")
-#shat_siemens_str = "$(shat_siemens[3])" * " " * "$(shat_siemens[4])" * " " * "$(shat_siemens[2])" * " " * "$(shat_siemens[5])" * " " * "$(shat_siemens[6])" * " " * "$(shat_siemens[7])" * " " * "$(shat_siemens[8])" * " " * "$(shat_siemens[9])"
-#println(f, shat_siemens_str)
-#close(f)
-#
-#run(`scp -oBatchMode=yes -oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa fre_update_file.txt root@192.168.2.2:/opt/medcom/MriCustomer/CustomerSeq/harmonized_shim/fre_update_file.txt`)
-#run(`scp -oBatchMode=yes -oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa shim_update_file.txt root@192.168.2.2:/opt/medcom/MriCustomer/CustomerSeq/harmonized_shim/shim_update_file.txt`)
-#println("scp Done")
+outfile = "fre_update_file.txt"
+f = open(outfile, "w")
+println(f, "$(shat_ge[1]*-1)")
+close(f)
+
+outfile = "shim_update_file.txt"
+f = open(outfile, "w")
+shat_siemens_str = "$(shat_siemens[3])" * " " * "$(shat_siemens[4])" * " " * "$(shat_siemens[2])" * " " * "$(shat_siemens[5])" * " " * "$(shat_siemens[6])" * " " * "$(shat_siemens[7])" * " " * "$(shat_siemens[8])" * " " * "$(shat_siemens[9])"
+println(f, shat_siemens_str)
+close(f)
+
+run(`scp -oBatchMode=yes -oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa fre_update_file.txt root@192.168.2.2:/opt/medcom/MriCustomer/CustomerSeq/harmonized_shim/fre_update_file.txt`)
+run(`scp -oBatchMode=yes -oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa shim_update_file.txt root@192.168.2.2:/opt/medcom/MriCustomer/CustomerSeq/harmonized_shim/shim_update_file.txt`)
+println("scp Done")
 
 #rm(fre_update_file.txt)
 #rm(shim_update_file.txt)
@@ -334,9 +346,9 @@ root_centered_data = ((fmap.-ave).^2).*mask
 mean_data = mean(root_centered_data)
 rms = sqrt(mean_data)
 
-print(" rms ", rms)
+#print(" rms ", rms)
 
-rms2 = sqrt.(sum(((fmap - ave*ones(size(fmap))).^2).*mask)/tot)
+rms2 = sqrt.(sum(((fmap - ave*ones(size(fmap))).^2).*mask)/tot) #should be correct
 print(" rms2 ", rms2)
 
 rms3 = sqrt.(sum((fmap - ave*mask).^2)/tot)
